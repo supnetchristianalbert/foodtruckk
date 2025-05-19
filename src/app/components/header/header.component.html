@@ -1,0 +1,19 @@
+<header>
+    <div class="header-container">
+        <div class="logo">logo goes here</div>
+        <nav>
+            <ul>
+                @if (!isLoggedIn) {
+                    <li>
+                        <a routerLink="login" href="">Login</a> 
+                    </li>
+                    <li>
+                        <a routerLink="signup" href="">Signup</a> 
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<router-outlet />
