@@ -3,10 +3,14 @@ const mongoose = require('mongoose');
 const bodParser = require('body-parser');
 const cors = require('cors');
 const footRoutes = require('./routes/foods');
+const userRoutes = require('./routes/user');
+const orderRoutes = require('./routes/order');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const apiPrefix = '/api/foodtruckk/foods';
+const apiFoodUri = '/api/foodtruckk/foods';
+const apiUserUri = '/api/foodtruckk/users';
+const apiOrderUri = '/api/foodtruckk/orders';
 
 app.use(bodParser.json());
 app.use(cors());
@@ -25,7 +29,9 @@ connectoToMongoDB()
     .catch((err) => console.log('CONNECTION ERROR', err));
 
 
-app.use(apiPrefix, footRoutes);
+app.use(apiFoodUri, footRoutes);
+app.use(apiUserUri, userRoutes);
+app.use(apiOrderUri, orderRoutes);
 
 // Start server
 app.listen(PORT, () => {
