@@ -1,0 +1,41 @@
+$text-color : #485d17;
+$font-family : Arial, Helvetica, sans-serif;
+
+.header-container {
+    display: block;
+    padding: 0;
+    background-color: #d76e25;
+
+    .logo, nav {
+        display: inline-block;
+        padding: 10px 20px;
+    }
+
+    .logo {
+        color: $text-color;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    nav {
+        text-align: center;
+        float: right;
+        ul {
+            list-style: none;
+            display: block;
+            margin: 0; padding: 0;
+            li {
+                display: inline-block;
+                padding: 0 5px;
+                a {
+                    text-decoration: none;
+                    font-size: 18px;
+                    font-weight: 500;
+                    color: $text-color;
+                    font-family: $font-family;
+                }
+            }
+        }
+    }
+    
+}
