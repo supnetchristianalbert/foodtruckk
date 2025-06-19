@@ -1,0 +1,31 @@
+<div class="container">
+    <form [formGroup]="loginForm" (submit)="submitForm()">
+        <div class="row">
+            <div class="col-md-12 mb-2">
+                <label for="username">Username <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="username"/>
+                @if(loginForm.touched) {
+                    @if (loginForm.controls.username.errors?.['required']) {
+                        <p class="text-danger">Username is required!</p>
+                    } 
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mb-2">
+                <label for="password">Password <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" formControlName="password">
+                @if(loginForm.touched) {
+                    @if (loginForm.controls.password.errors?.['required']) {
+                        <p class="text-danger">Password is required!</p>
+                    } 
+                }
+            </div>
+        </div>
+         <div class="row">
+            <div class="col-md-12 mb-2">
+                <button [disabled]="loginForm.invalid" type="submit" class="btn btn-lg btn-primary">Login</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,8 +1,7 @@
-import { Component,inject } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component,inject, output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SignupForm } from './signupForm';
 import { User } from '../../../services/user/user';
-import { UserService } from '../../../services/user/user.service';
  
 @Component({
   selector: 'app-form',
@@ -12,19 +11,21 @@ import { UserService } from '../../../services/user/user.service';
 })
 export class FormComponent {
 
-    formBuilder = inject(NonNullableFormBuilder);
+    formBuilder = inject(FormBuilder);
     signupForm! : FormGroup<SignupForm>;
     userSignup! : User; 
+    signupFormOutput = output<FormGroup>();
     
-    constructor(private userService : UserService) {}
+    constructor() {}
 
     ngOnInit() : void {
         this.signupForm = this.formBuilder.group<SignupForm>({
-            username : this.formBuilder.control('',[Validators.required, Validators.maxLength(20), Validators.min(6)]),
+            username : this.formBuilder.control(new FormControl('').value,[Validators.required, Validators.maxLength(20), Validators.min(6)]),
             password : this.formBuilder.control('', [Validators.required]),
             name : this.formBuilder.control(''),
             email : this.formBuilder.control('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]),
-            mobile : this.formBuilder.control(0, [Validators.required, Validators.pattern(/^[0-9]/)])
+            mobile : this.formBuilder.control(0, [Validators.required, Validators.pattern(/^[0-9]/)]),
+            address : this.formBuilder.control(new FormControl('').value)
         });
     }
 
@@ -34,17 +35,8 @@ export class FormComponent {
             return;
         }
 
-        this.userSignup = this.signupForm.value;
-        
-        this.userService.createUser(this.userSignup).subscribe({
-            next : (res) => {
-                console.log(res);
-                this.signupForm.reset();
-            },
-            error : (err)=>{
-                console.log(err);
-            }
-        });
+        this.signupFormOutput.emit(this.signupForm);
+                
     }
    
 }
