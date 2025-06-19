@@ -12,20 +12,25 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 mb-2">
-                <label for="password">Password <span class="text-danger">*</span></label>
-                <input type="password" class="form-control" formControlName="password">
-                @if(loginForm.touched) {
-                    @if (loginForm.controls.password.errors?.['required']) {
-                        <p class="text-danger">Password is required!</p>
-                    } 
-                }
+            <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+            <div class="col-md-12 mb-2 input-group">
+                <input [type]="passwordType" class="form-control" formControlName="password">
+                <span class="input-group-text" (click)="togglePasswordVisibility()"><i class="bi" [ngClass]="isShowPw ? showPasswordClass : hidePasswordClass"></i></span>
+
             </div>
+            @if(loginForm.touched) {
+                @if (loginForm.controls.password.errors?.['required']) {
+                    <p class="text-danger">Password is required!</p>
+                } 
+            }
         </div>
-        <div class="row">
+        <div class="row ms-1 mb-2">
             <div class="col-md-6 form-check">
                 <input class="form-check-input" type="checkbox" [(ngModel)]="isRememberme" [ngModelOptions]="{standalone: true}"/>
                 <label class="form-check-label">Rememeber me</label>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="" [routerLink]="['/forgot-password']">Forgot Password</a>
             </div>
         </div>
          <div class="row">

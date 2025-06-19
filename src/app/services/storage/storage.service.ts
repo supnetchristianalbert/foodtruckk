@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getCookie, setCookie, deleteCookie } from '../../infrastructure/utils/cookie';
-import { User } from '../../components/profile/user';
+
 @Injectable({
   providedIn: 'root'
 })

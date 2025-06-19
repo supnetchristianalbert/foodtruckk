@@ -1,4 +1,4 @@
-export const getCookie : any = (cookieName : string) => {
+export const getCookie = (cookieName : string) : string|null => {
 
     const cookies = document.cookie;
     const cookieTemp = cookies.split(';');
@@ -16,14 +16,13 @@ export const getCookie : any = (cookieName : string) => {
         return cookie.substring(cookieName.length + 1, cookie.length);
     }
 
-    return '';
+    return null;
 }
 
 export const setCookie = (cookieName : string, value : any, expiration? : any) : void => {
 
     const exp = !expiration ? new Date(new Date().getTime() + (60 * 60 * 1000)) : expiration;
 
-    console.log('COOKIE', exp, value);
     document.cookie = `${cookieName}=${value};expires=${exp}`;
 }
 
