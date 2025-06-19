@@ -44,4 +44,5 @@ Thumbs.db
 
 /.vscode
 
-/src/app/server/.env
+server/.env
+server/node_modules
