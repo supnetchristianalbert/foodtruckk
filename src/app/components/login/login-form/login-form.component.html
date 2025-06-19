@@ -22,6 +22,12 @@
                 }
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6 form-check">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="isRememberme" [ngModelOptions]="{standalone: true}"/>
+                <label class="form-check-label">Rememeber me</label>
+            </div>
+        </div>
          <div class="row">
             <div class="col-md-12 mb-2">
                 <button [disabled]="loginForm.invalid" type="submit" class="btn btn-lg btn-primary">Login</button>
