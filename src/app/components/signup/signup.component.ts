@@ -37,9 +37,6 @@ export class SignupComponent {
 
         this.userService.createUser(user).subscribe({
             next : (res : any) => {
-                console.log(res);
-                //emit an event to reset form
-                FormComponent.prototype.signupForm.reset();
                 this.storageService.persistAuthenticationAndUser(res);
                 this.router.navigate(['/home']);
             },

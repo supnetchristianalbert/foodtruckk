@@ -34,7 +34,8 @@ router.post('/', async (req, res) => {
         );
         
         await user.save();
-        res.status(201).json({...user, token : token});
+        const { _id } = user;
+        res.status(201).json({userId : _id, token : token});
     } catch(err){
         console.log('ERRR', err);
         res.status(501).json({error :  'Failed to create user!'});

@@ -1,22 +1,53 @@
 <div class="container">
-    <form class="p-5" novalidate (submit)="submitForm()" [formGroup]="signupForm">
+    <form class="p-2" novalidate (submit)="submitForm()" [formGroup]="signupForm">
         <div class="row">
             <div class="col-md-12 mb-2">
                 <label for="username" class="form-label">User Name<span class="text-danger">*</span></label>
                 <input type="text" class="form-control " formControlName="username"/>
-                @if (signupForm.controls.username.invalid && signupForm.touched) {
+            </div>
+
+            @if(signupForm.controls.username.invalid &&
+                (
+                    signupForm.controls.username.dirty ||
+                    signupForm.controls.username.touched
+                )
+            ) {
+                @if (signupForm.controls.username.errors?.['required']) {
                     <p class="error text-danger">Username is Required</p>
                 }
-            </div>
+                
+                @if (signupForm.controls.username.errors?.['minlength']) {
+                    <p class="error text-danger">Username should have at least 6 characters</p>
+                } 
+
+                @if(signupForm.controls.username.errors?.['maxlength']) { 
+                    <p class="error text-danger">Username cannot have more than 20 characters</p>
+                }
+
+                @if (signupForm.controls.username.errors?.['pattern']) {
+                <p class="error text-danger">username format is invalid</p>
+            }
+            }
+
         </div>
         <div class="row">
-            <div class="col-md-12 mb-2">
-                <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
-                <input type="password" class="form-control" formControlName="password" />
-                @if (signupForm.controls.password.invalid && signupForm.touched) {
+            <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
+            <div class="col-md-12 mb-2 input-group">
+                <input [type]="pwType" class="form-control" formControlName="password" />
+                <app-togglepassword (togglePW)="showHidePw($event)"></app-togglepassword>
+            </div>
+
+            @if(signupForm.controls.password.invalid &&
+                (
+                    signupForm.controls.password.dirty ||
+                    signupForm.controls.password.touched
+                )
+            ) {
+
+                @if (signupForm.controls.password.errors?.['required']) {
                     <p class="error text-danger">Password is Required</p>
                 }
-            </div>
+            }
         </div>
         <div class="row">
             <div class="col-md-12 mb-2">
@@ -26,46 +57,71 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-12 mb-3">
+                <label for="address" class="form-label">Address<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" formControlName="address"/>
+
+                @if(signupForm.controls.address.invalid &&
+                    (
+                        signupForm.controls.address.dirty ||
+                        signupForm.controls.address.touched
+                    )
+                ) {
+                    @if (signupForm.controls.address.errors?.['required']) {
+                        <p class="error text-danger">Address is Required</p>
+                    }
+                }
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12 mb-2">
                 <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" formControlName="email"/>
-
-                @if(signupForm.controls.email.touched) {
-                    @if (signupForm.controls.email.errors?.['required']) {
-                        <p class="error text-danger">Email is Required</p>
-                    }
-                    @if (signupForm.controls.email.errors?.['pattern']) {
-                        <p class="error text-danger">Email format is invalid</p>
-                    }
-                }
-               
             </div>
+
+             @if(signupForm.controls.email.invalid &&
+                (
+                    signupForm.controls.email.dirty ||
+                    signupForm.controls.email.touched
+                )
+            ) {
+                @if (signupForm.controls.email.errors?.['required']) {
+                    <p class="error text-danger">Email is Required</p>
+                }
+                @if (signupForm.controls.email.errors?.['pattern']) {
+                    <p class="error text-danger">Email format is invalid</p>
+                }
+            }
         </div>
         <div class="row">
-            <div class="col-md-12 mb-3">
+            <div class="col-md-12 mb-2">
                 <label for="mobile" class="form-label">Mobile<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" formControlName="mobile"/>
-                @if(signupForm.controls.mobile.touched) {
-                    @if (signupForm.controls.mobile.errors?.['required']) {
-                        <p class="error text-danger">Mobile is Required</p>
-                    }
-                    @if (signupForm.controls.mobile.errors?.['pattern']) {
-                        <p class="error text-danger">Mobile format is invalid</p>
-                    }
+            </div>
+
+            @if(signupForm.controls.mobile.invalid &&
+                (
+                    signupForm.controls.mobile.dirty ||
+                    signupForm.controls.mobile.touched
+                )
+            ) {
+                @if (signupForm.controls.mobile.errors?.['required']) {
+                    <p class="error text-danger">Mobile is Required</p>
                 }
-            </div>
+
+                @if (signupForm.controls.mobile.errors?.['pattern']) {
+                    <p class="error text-danger">Mobile format is invalid</p>
+                }
+            }
         </div>
         <div class="row">
-            <div class="col-md-12 mb-3">
-                <label for="address" class="form-label">Address</label>
-                <input type="text" class="form-control" formControlName="address"/>
+            <div class="col-lg-12 mb-2 mt-2">
+                <button class="btn btn-primary" [disabled]="signupForm.invalid">Signup</button>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12 mb-2">
-                <button class="btn btn-primary" [disabled]="signupForm.invalid">Submit</button>
-            </div>
-        </div>
-        
+
     </form>
+    <section class="text-center">
+        <p>Already have an account? Click <a href="" routerLink="/login">here</a> to Login.</p>
+    </section>
 </div>

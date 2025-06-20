@@ -25,7 +25,7 @@ export const routes: Routes = [
         path : 'forgot-password', component : ForgotpasswordComponent
     },
     {
-        path : 'signup', component : SignupComponent
+        path : 'signup', component : SignupComponent, canActivate : [redirectIfAuthGuard]
     },
     {
         path : 'profile/:id', 
