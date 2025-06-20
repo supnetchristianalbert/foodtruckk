@@ -4,12 +4,17 @@
             <div class="col-md-12 mb-2">
                 <label for="username">Username <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" formControlName="username"/>
-                @if(loginForm.touched) {
-                    @if (loginForm.controls.username.errors?.['required']) {
-                        <p class="text-danger">Username is required!</p>
-                    } 
-                }
             </div>
+            @if(loginForm.controls.username.invalid &&
+                    (
+                        loginForm.controls.username.dirty ||
+                        loginForm.controls.username.touched
+                    )
+            ) {
+                @if (loginForm.controls.username.errors?.['required']) {
+                    <p class="text-danger">Username is required!</p>
+                }
+            }
         </div>
         <div class="row">
             <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
@@ -18,7 +23,12 @@
                 <app-togglepassword (togglePW)="showHidePw($event)"></app-togglepassword>
 
             </div>
-            @if(loginForm.touched) {
+            @if(loginForm.controls.password.invalid &&
+                (
+                    loginForm.controls.password.dirty ||
+                    loginForm.controls.password.touched
+                )
+            ) {
                 @if (loginForm.controls.password.errors?.['required']) {
                     <p class="text-danger">Password is required!</p>
                 } 
