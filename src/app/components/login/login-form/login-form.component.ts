@@ -1,9 +1,10 @@
 import { Component, inject, output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
-import LoginFormPayload from './loginFormPayload';
 import { getCookie, deleteCookie, setCookie } from '../../../infrastructure/utils/cookie';
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TogglepasswordComponent } from '../../shared/togglepassword/togglepassword.component';
+import LoginFormPayload from './loginFormPayload';
 
 @Component({
   selector: 'app-login-form',
@@ -11,7 +12,8 @@ import { RouterLink } from '@angular/router';
     ReactiveFormsModule,
     FormsModule,
     NgClass,
-    RouterLink
+    RouterLink,
+    TogglepasswordComponent
 ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss'
@@ -22,9 +24,6 @@ export class LoginFormComponent {
     loginForm! : FormGroup<LoginFormPayload>;
     loginFormOutput = output<FormGroup>();
     isRememberme : boolean = false;
-    isShowPw : boolean = false;
-    showPasswordClass : string = 'bi-eye-fill';
-    hidePasswordClass : string = 'bi-eye-slash';
     passwordType : string = 'password';
 
     constructor() {}
@@ -78,8 +77,7 @@ export class LoginFormComponent {
         this.loginForm.controls.password.patchValue(parsedRememberMe.password);
     }
 
-    togglePasswordVisibility() : void {
-        this.isShowPw = !this.isShowPw;
-        this.passwordType = this.isShowPw ? 'text' : 'password';
+    showHidePw( value : any) : void {
+        this.passwordType = value ? 'text' : 'password';
     }
 }
