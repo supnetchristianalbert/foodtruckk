@@ -1,6 +1,6 @@
 <header>
     <div class="header-container">
-        <div class="logo">Food Truckk</div>
+        <div class="logo" routerLink="home">Food Truckk</div>
         <nav>
             <ul>
                 @if (!isLoggedIn) {
@@ -9,6 +9,25 @@
                     </li>
                     <li>
                         <a routerLink="signup" href="">Signup</a> 
+                    </li>
+                     <li>
+                        <a routerLink="signup" href="">Menu</a> 
+                    </li>
+                } @else {
+                    <li>
+                        <a [routerLink]="editProfileUrl" href="">Profile</a> 
+                    </li>
+                    <li>
+                        <a routerLink="menu" href="">Menu</a> 
+                    </li>
+                     <li>
+                        <a routerLink="order-history" href="">Order History</a> 
+                    </li>
+                     <li>
+                        <a routerLink="cart" href="">Cart</a> 
+                    </li>
+                     <li>
+                        <a (click)="logout()" href="">Logout</a> 
                     </li>
                 }
             </ul>

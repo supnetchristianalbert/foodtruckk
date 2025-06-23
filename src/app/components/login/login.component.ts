@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { FormGroup } from '@angular/forms';
 import { LoginService } from '../../services/login/login.service';
 import { Login } from '../../services/login/login';
-import { StorageService } from '../../services/storage/storage.service';
 import { Router } from '@angular/router';
 import { User } from '../profile/user';
+import { AuthorizationService } from '../../services/authorization/authorization.service';
 
 @Component({
   selector: 'app-login',
@@ -17,11 +17,10 @@ import { User } from '../profile/user';
 })
 export class LoginComponent {
 
-    constructor(
-        private loginService : LoginService, 
-        private storage : StorageService,
-        private router : Router
-    ){}
+    authService = inject(AuthorizationService);
+    loginService = inject(LoginService);
+    router = inject(Router);
+    constructor(){}
 
     onSubmitLoginForm(event  : FormGroup) : void {
 
@@ -29,7 +28,7 @@ export class LoginComponent {
 
         this.loginService.login(payload).subscribe({
             next : (res : any) => {                
-                this.storage.persistAuthenticationAndUser(res);
+                this.authService.authorize(res);
                 this.router.navigate(['/home']);
             },
             error : (err : any) => {

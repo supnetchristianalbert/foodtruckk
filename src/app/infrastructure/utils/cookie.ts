@@ -1,9 +1,8 @@
 export const getCookie = (cookieName : string) : string|null => {
 
     const cookies = document.cookie;
-    const cookieTemp = cookies.split(';');
+    const cookieTemp = cookies.split('; ');
     let cookieTempIdx : any = null;
-
     cookieTemp.forEach((item, idx) => {
 
         if (item.indexOf(cookieName) !== -1) {
@@ -12,6 +11,7 @@ export const getCookie = (cookieName : string) : string|null => {
     });
 
     if (cookieTempIdx !== null) {
+
         const cookie = cookieTemp[cookieTempIdx];
         return cookie.substring(cookieName.length + 1, cookie.length);
     }
@@ -23,7 +23,7 @@ export const setCookie = (cookieName : string, value : any, expiration? : any) :
 
     const exp = !expiration ? new Date(new Date().getTime() + (60 * 60 * 1000)) : expiration;
 
-    document.cookie = `${cookieName}=${value};expires=${exp}`;
+    document.cookie = `${cookieName.trim()}=${value};expires=${exp}`;
 }
 
 export const deleteCookie = (cookieName : string) : void => {

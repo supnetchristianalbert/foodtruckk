@@ -1,11 +1,9 @@
 import { CanActivateFn } from '@angular/router';
 import { getCookie } from '../infrastructure/utils/cookie';
-import { LoginService } from '../services/login/login.service';
-import { inject } from '@angular/core';
-import { StorageService } from '../services/storage/storage.service'
+import { CONSTANTS } from '../infrastructure/utils/contants';
 
 export const authGuard: CanActivateFn = (route, state) => {
-    const cookieToken = getCookie('ft_token');
+    const cookieToken = getCookie(CONSTANTS.AUTH_TOKEN);
 
     return cookieToken === null || cookieToken === 'undefined';
 };

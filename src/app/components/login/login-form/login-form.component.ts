@@ -11,7 +11,6 @@ import LoginFormPayload from './loginFormPayload';
   imports: [
     ReactiveFormsModule,
     FormsModule,
-    NgClass,
     RouterLink,
     TogglepasswordComponent
 ],

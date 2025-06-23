@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormComponent } from './form/form.component';
 import { UserService } from '../../services/user/user.service';
 import { FormGroup } from '@angular/forms';
 import { SignupForm } from './form/signupForm';
 import { Router } from '@angular/router';
-import { StorageService } from '../../services/storage/storage.service';
-import { User } from '../profile/user';
+import { AuthorizationService } from '../../services/authorization/authorization.service';
 
 
 @Component({
@@ -18,12 +17,11 @@ import { User } from '../profile/user';
 })
 export class SignupComponent {
     
-    constructor(
-        private userService : UserService, 
-        private router : Router,
-        private storageService : StorageService
-    ) {}
+    userService = inject(UserService);
+    router = inject(Router);
+    authService = inject(AuthorizationService);
 
+    constructor() {}
 
     onSubmitSignupForm(signupFormGroup : FormGroup) {
         const user = new SignupForm(
@@ -37,7 +35,7 @@ export class SignupComponent {
 
         this.userService.createUser(user).subscribe({
             next : (res : any) => {
-                this.storageService.persistAuthenticationAndUser(res);
+                this.authService.authorize(res);
                 this.router.navigate(['/home']);
             },
             error : (err)=>{
