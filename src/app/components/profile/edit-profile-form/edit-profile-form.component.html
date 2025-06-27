@@ -1,9 +1,10 @@
-<div class="container">
+@if(userData()) {
+    <div class="container">
     <form class="p-2" novalidate (submit)="submitForm()" [formGroup]="editProfileForm">
         <div class="row">
             <div class="col-md-12 mb-2">
                 <label for="username" class="form-label" readonly="true">User Name</label>
-                <input type="text" class="form-control " formControlName="username"/>
+                <input type="text" class="form-control " formControlName="username" readonly/>
             </div>
 
         </div>
@@ -19,7 +20,7 @@
                 <label for="address" class="form-label">Address<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" formControlName="address"/>
 
-                <!-- @if(editProfileForm.controls.address.invalid &&
+                @if(editProfileForm.controls.address.invalid &&
                     (
                         editProfileForm.controls.address.dirty ||
                         editProfileForm.controls.address.touched
@@ -28,7 +29,7 @@
                     @if (editProfileForm.controls.address.errors?.['required']) {
                         <p class="error text-danger">Address is Required</p>
                     }
-                } -->
+                }
             </div>
         </div>
         <div class="row">
@@ -37,7 +38,7 @@
                 <input type="text" class="form-control" formControlName="email"/>
             </div>
 
-             <!-- @if(editProfileForm.controls.email.invalid &&
+             @if(editProfileForm.controls.email.invalid &&
                 (
                     editProfileForm.controls.email.dirty ||
                     editProfileForm.controls.email.touched
@@ -49,15 +50,15 @@
                 @if (editProfileForm.controls.email.errors?.['pattern']) {
                     <p class="error text-danger">Email format is invalid</p>
                 }
-            } -->
+            }
         </div>
         <div class="row">
             <div class="col-md-12 mb-2">
                 <label for="mobile" class="form-label">Mobile<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" formControlName="mobile"/>
+                <input type="number" class="form-control" formControlName="mobile"/>
             </div>
 
-            <!-- @if(editProfileForm.controls.mobile.invalid &&
+            @if(editProfileForm.controls.mobile.invalid &&
                 (
                     editProfileForm.controls.mobile.dirty ||
                     editProfileForm.controls.mobile.touched
@@ -70,13 +71,14 @@
                 @if (editProfileForm.controls.mobile.errors?.['pattern']) {
                     <p class="error text-danger">Mobile format is invalid</p>
                 }
-            } -->
+            }
         </div>
         <div class="row">
             <div class="col-lg-12 mb-2 mt-2">
-                <button class="btn btn-primary" [disabled]="editProfileForm.dirty">Update Profile</button>
+                <button class="btn btn-primary" [disabled]="editProfileForm.invalid">Update Profile</button>
             </div>
         </div>
 
     </form>
 </div>
+}

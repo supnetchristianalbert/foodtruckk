@@ -1,4 +1,4 @@
-import { Component, inject, Input, input, output } from '@angular/core';
+import { Component, inject, Input, input, output, computed, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { EditProfilePayload } from './editProfilePayload';
 import { User } from '../user';
@@ -11,32 +11,31 @@ import { User } from '../user';
 })
 export class EditProfileFormComponent {
 
-    user = input.required<User>();
+    userData = input<User>();
     formBuilder = inject(FormBuilder);
     editProfileForm! : FormGroup<EditProfilePayload>;
     editFormOutput = output<FormGroup>();
-    
+
     constructor() {}
 
-    ngOnChanges() {
-        this.initialLizeEditProfileForm();   
+    ngOnChanges(changes : SimpleChanges) {
+        if (changes['userData'].currentValue) {
+            this.initialLizeEditProfileForm(changes['userData'].currentValue);
+        }
     }
 
 
-    initialLizeEditProfileForm() {
-        this.editProfileForm = this.formBuilder.group<EditProfilePayload>({
-            username : this.formBuilder.control(this.user().username, [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
-            name : this.formBuilder.control(this.user().name),
-            address : this.formBuilder.control(this.user().address, [Validators.required]),
-            email : this.formBuilder.control(this.user().email, [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]),
-            mobile : this.formBuilder.control(this.user().mobile, [Validators.required, Validators.pattern(/^[0-9]/)])
-        })
+    initialLizeEditProfileForm(userData : User) {
+       this.editProfileForm = this.formBuilder.group<EditProfilePayload>({
+            username : this.formBuilder.control(userData.username),
+            name : this.formBuilder.control(userData.name),
+            address : this.formBuilder.control(userData.address, [Validators.required]),
+            email : this.formBuilder.control(userData.email, [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]),
+            mobile : this.formBuilder.control(userData.mobile, [Validators.required, Validators.pattern(/^[0-9]/)])
+        });
     }
 
     submitForm() {
         this.editFormOutput.emit(this.editProfileForm);
     }
-
-
-     
 }
